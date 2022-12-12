@@ -17,7 +17,7 @@ namespace Unnamed.Controllers
     {
         private IConfiguration _configuration;
         private readonly ToDoListDbContext _db;
-        // private readonly ILogger<LoginController> _logger; for error messages?
+       
 
         public LoginController(IConfiguration configuration, ToDoListDbContext db)
         {
@@ -55,6 +55,7 @@ namespace Unnamed.Controllers
                 new Claim (ClaimTypes.NameIdentifier, user.UserName),
                 new Claim(ClaimTypes.Role, user.Role),
                 //new Claim(JwtRegisteredClaimNames.Typ,user.Role),
+                new Claim("errorMessage", "Invalid username or password"),
                
             };
 
@@ -65,6 +66,7 @@ namespace Unnamed.Controllers
                 Issuer = issuer,
                 Audience = audience,
                 SigningCredentials = credentials
+                
             };
 
 
@@ -73,6 +75,7 @@ namespace Unnamed.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             //var jwtToken = tokenHandler.WriteToken(token);
             var stringToken = tokenHandler.WriteToken(token);
+
 
             return stringToken;
 

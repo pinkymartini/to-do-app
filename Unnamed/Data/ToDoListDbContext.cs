@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Unnamed.Models;
-using System.Data;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+
 
 namespace Unnamed.Data
 {
@@ -27,7 +27,6 @@ namespace Unnamed.Data
         {
             optionsBuilder.UseLazyLoadingProxies();
             
-
 
         }
         public DbSet<List> ToDoLists { get; set; }

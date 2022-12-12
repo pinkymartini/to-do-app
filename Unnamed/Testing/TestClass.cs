@@ -22,26 +22,17 @@ namespace Unnamed.Testing
 
         public IActionResult PopulateUsers()
         {
+            _context.Entry.Add(
+                new Entry
+                {
+                    Date= DateTime.Now,
+                    Description = "nono",
+                    IsCompleted =true,
+                    PriorityLevel = PriorityLevel.HIGH.ToString(),
+                    Name = "no name",
+                    ListId = new Guid("C0D7D9CA-B9FF-4D7F-3B99-08DAD109B167"),
 
-
-
-
-            _context.Users.Add(
-                new User { Password = "1234", UserName = "magician", Role = "Admin" }
-                );
-
-            _context.Users.Add(
-                new User { Password = "5678", UserName = "emotion", Role = "Admin" }
-                );
-
-            _context.Users.Add(
-            new User { Password = "1423", UserName = "casper", Role = "Visitor" }
-                );
-
-            _context.Users.Add(
-            new User { Password = "8996", UserName = "user_" + Name.First, Role = "Visitor" }
-                );
-
+                });
             _context.SaveChanges();
 
             return Ok("Database populated.");

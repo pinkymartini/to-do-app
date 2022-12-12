@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims; //defines roles
 using System.Text;
+using Unnamed;
 using Unnamed.Data;
 using Unnamed.Models;
 using Unnamed.Services;
@@ -52,6 +53,12 @@ builder.Services.AddSwaggerGen(setup =>
 builder.Services.AddTransient<IListService, ListService>();
 builder.Services.AddTransient<IEntryService, EntryService>();
 
+//builder.Services.AddControllersWithViews(options =>
+//{
+//    // Register the CustomAuthorizationFilter as a global filter
+//    options.Filters.Add(new CustomAuthFilter());
+//});
+
 
 //add dbase connection here
 builder.Services.AddDbContext<ToDoListDbContext>(options =>
@@ -78,7 +85,14 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddAuthorization();
+builder.Services.AddSingleton<IAuthorizationHandler, MinimumAgeHandler>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AtLeast21", policy =>
+        policy.Requirements.Add(new MinimumAgeRequirement(21)));
+});
+
 
 
 

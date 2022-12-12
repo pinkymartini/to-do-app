@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Principal;
 using Unnamed.Data;
+using Unnamed.Logic;
 using Unnamed.Models;
 using Unnamed.Services;
 
@@ -10,7 +11,7 @@ namespace Unnamed.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [Authorize(Roles ="Admin")]
+   // [Authorize(Roles ="Admin")]
     public class ListController : Controller
     {
         private readonly IListService _listService;
@@ -19,6 +20,8 @@ namespace Unnamed.Controllers
 
         public delegate Task<IActionResult> FlagDelegate(Guid id, int flag);
 
+
+
         public ListController(IListService listService , ToDoListDbContext db)
         {
             _listService = listService;
@@ -26,7 +29,7 @@ namespace Unnamed.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public async Task<IActionResult> getLists()
         {
             var lists = await _listService.getLists();
@@ -136,6 +139,7 @@ namespace Unnamed.Controllers
         [HttpGet]
         [Route("{id:Guid}/FilterAlphabetically")]
         [AllowAnonymous]
+        
         public async Task <IActionResult> OrderEntriesAlphabetically([FromRoute] Guid id , int flag)
         {
             var list = await _db.ToDoLists.FindAsync(id);
@@ -154,10 +158,21 @@ namespace Unnamed.Controllers
 
         }
 
-        //public ICollection<Entry> order(Guid id, FlagDelegate filter)
-        //{
-        //  if(filter())
-        //}
+        [HttpGet]
+        [Route("{id:Guid}/FilterPriority")]
+        public async Task<IActionResult> PriorityOrdering([FromRoute] Guid id)
+        {
+            var list = await _db.ToDoLists.FindAsync(id);
+            ICollection<Entry> filteredList;
+            PriorityComparer priorityComparer= new PriorityComparer();
 
+            
+         filteredList = list.Entries.OrderByDescending(x=> priorityComparer._priorityMap[x.PriorityLevel])
+                .ToList();
+         
+            if (list == null) return NotFound("list not found");
+            else return Ok(filteredList);
+
+        }
     }
 }

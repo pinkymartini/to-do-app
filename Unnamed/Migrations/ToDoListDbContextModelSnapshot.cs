@@ -38,6 +38,9 @@ namespace Unnamed.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("ListId")
                         .HasColumnType("uniqueidentifier");
 
@@ -45,11 +48,15 @@ namespace Unnamed.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PriorityLevel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ListId");
 
-                    b.ToTable("Entry");
+                    b.ToTable("Entry", (string)null);
                 });
 
             modelBuilder.Entity("Unnamed.Models.List", b =>
@@ -64,7 +71,7 @@ namespace Unnamed.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ToDoLists");
+                    b.ToTable("ToDoLists", (string)null);
                 });
 
             modelBuilder.Entity("Unnamed.Models.User", b =>
@@ -89,7 +96,7 @@ namespace Unnamed.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Unnamed.Models.Entry", b =>

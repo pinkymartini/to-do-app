@@ -13,8 +13,7 @@ namespace Unnamed.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-   
-
+    //[Authorize(Policy = "AtLeast21")]
     public class EntryController : Controller
     {
         private readonly IEntryService _entryService;
@@ -26,8 +25,10 @@ namespace Unnamed.Controllers
             _db = db;
         }
 
-
+       
         [HttpGet]
+        //[Authorize(Roles = "Admin")]
+        [CustomAuthFilter]
         public async Task<IActionResult> getEntries()
         {
             var entries = await _entryService.getEntries();

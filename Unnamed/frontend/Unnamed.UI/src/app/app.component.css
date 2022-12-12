@@ -1,0 +1,12 @@
+
+ .class1 {
+background-color: blue;
+display: flex;
+color: red;
+
+}
+
+.class1:hover{
+  color: aqua;
+}
+
