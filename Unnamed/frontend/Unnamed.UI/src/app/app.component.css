@@ -10,3 +10,11 @@ color: red;
   color: aqua;
 }
 
+.container-fluid{
+  font-weight: bold;
+}
+
+.navbar{
+  background-color: rgb(178, 214, 34);
+}
+

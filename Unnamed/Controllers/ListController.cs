@@ -11,7 +11,7 @@ namespace Unnamed.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-   // [Authorize(Roles ="Admin")]
+   [Authorize(Roles ="Admin")]
     public class ListController : Controller
     {
         private readonly IListService _listService;

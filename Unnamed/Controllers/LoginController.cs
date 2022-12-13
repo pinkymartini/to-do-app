@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Web.Helpers;
 using Unnamed.Data;
 using Unnamed.Models;
 
@@ -40,7 +42,7 @@ namespace Unnamed.Controllers
         [HttpGet]
         public string WelcomeScreen()
         {
-            return "Please enter username and password to do operations in the system";
+            return JsonConvert.SerializeObject("Please enter username and password to do operations in the system");
         }
 
         private string GenerateUserToken(User user)
@@ -77,7 +79,7 @@ namespace Unnamed.Controllers
             var stringToken = tokenHandler.WriteToken(token);
 
 
-            return stringToken;
+            return JsonConvert.SerializeObject(stringToken);
 
 
 

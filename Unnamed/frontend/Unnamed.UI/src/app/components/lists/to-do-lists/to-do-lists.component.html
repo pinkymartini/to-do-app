@@ -1,0 +1,35 @@
+
+
+<div class="container" *ngIf="lists && lists.length>0">
+
+<!-- loop over the outer array using *ngFor -->
+<div *ngFor="let list of lists">
+    <!-- display the properties of the current item -->
+    <h5 >{{ list.name }}</h5>
+    <!-- loop over the inner array of objects using *ngFor -->
+    <div *ngFor="let innerItem of list.entries" style="margin-left: 20px;">
+      <!-- display the properties of the current inner item -->
+      <p>{{ innerItem.name }}</p>
+      <p>{{ innerItem.description }}</p>
+      
+      <div *ngIf="innerItem.isCompleted; else elseBlock">
+        Task Completed.</div>
+
+      <ng-template #elseBlock>Task Not Completed</ng-template>
+
+      <p></p>
+
+
+      <p>{{ innerItem.priorityLevel}}</p>
+      <p>{{ innerItem.date }}</p>
+
+      <p style="font-weight: bold;">end of entry {{innerItem.name}}</p>
+    
+    </div>
+    <p style="font-weight: bold;">end of list {{list.name}}</p>
+  </div>
+  
+</div>
+<p *ngIf="!lists || lists.length <= 0"> You have no current lists.</p>
+
+

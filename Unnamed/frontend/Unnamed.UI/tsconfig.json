@@ -14,6 +14,9 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    //null check disabled
+    "strictNullChecks": false,
+    
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",
@@ -22,6 +25,11 @@
     "lib": [
       "ES2022",
       "dom"
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "node_modules/@angular",
+      "node_modules/@angular/common/http",
     ]
   },
   "angularCompilerOptions": {

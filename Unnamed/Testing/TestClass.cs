@@ -19,7 +19,6 @@ namespace Unnamed.Testing
         }
 
         [HttpGet]
-
         public IActionResult PopulateUsers()
         {
             _context.Entry.Add(
