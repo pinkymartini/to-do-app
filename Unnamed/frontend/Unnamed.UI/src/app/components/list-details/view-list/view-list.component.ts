@@ -13,14 +13,14 @@ import { ToDoListsService } from 'src/app/services/to-do-lists.service';
 
 export class ViewListComponent implements OnInit {
 
-  listDetails : List = {
+  listDetails: List = {
     name: "",
     entries: [],
     id: ""
   }
 
-  entryDetails : Entry ={
-    id:'',
+  entryDetails: Entry = {
+    id: '',
     name: '',
     description: '',
     date: new Date(),
@@ -28,8 +28,8 @@ export class ViewListComponent implements OnInit {
     priorityLevel: ''
   }
 
-  newEntryDetails : Entry ={
-    id:'',
+  newEntryDetails: Entry = {
+    id: '',
     name: '',
     description: '',
     date: new Date(),
@@ -37,10 +37,10 @@ export class ViewListComponent implements OnInit {
     priorityLevel: ''
   }
 
-  flag: boolean =false;
+  flag: boolean = false;
 
-  editedEntryDetails : Entry={
-    id:'',
+  editedEntryDetails: Entry = {
+    id: '',
     name: '',
     description: '',
     date: new Date(),
@@ -52,21 +52,20 @@ export class ViewListComponent implements OnInit {
   priorityMap = new Map<string, number>([
     ["HIGH", 3],
     ["MEDIUM", 2],
-    ["LOW", 1],]); 
+    ["LOW", 1],]);
 
 
-  constructor(private listService: ToDoListsService, private route: ActivatedRoute){}
+  constructor(private listService: ToDoListsService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
 
     this.route.paramMap.subscribe({
-      next: (params)=> {
+      next: (params) => {
         const id = params.get('id');
-        if(id)
-        {
+        if (id) {
           this.listService.getSingleList(id).subscribe({
-            next: (response)=>{
-              this.listDetails=response
+            next: (response) => {
+              this.listDetails = response
               console.log(this.listDetails)
             }
           })
@@ -75,53 +74,51 @@ export class ViewListComponent implements OnInit {
     })
   }
 
-  deleteEntry(id: string)
-  {
+  deleteEntry(id: string) {
 
     console.log(id)
     this.listService.deleteEntry(id)
-    
-    .subscribe({
-      next: ()=>{ this.route.paramMap.subscribe({
-        next: (params)=> {
-          const id = params.get('id');
-  
-          if(id)
-          {
-            this.listService.getSingleList(id).subscribe({
-              next: (response)=>{
-                this.listDetails=response
-                console.log(this.listDetails)
+
+      .subscribe({
+        next: () => {
+          this.route.paramMap.subscribe({
+            next: (params) => {
+              const id = params.get('id');
+
+              if (id) {
+                this.listService.getSingleList(id).subscribe({
+                  next: (response) => {
+                    this.listDetails = response
+                    console.log(this.listDetails)
+                  }
+                })
               }
-            })
-          }
+            }
+          })
         }
       })
-      }
-    })
   }
 
-  addEntry(id: string, newEntryDetails: Entry)
-  { 
+  addEntry(id: string, newEntryDetails: Entry) {
     this.listService.addEntry(id, newEntryDetails).subscribe({
-      next:()=>{ this.route.paramMap.subscribe({
-        next:(params) => {
-          const id = params.get('id');
-          if(id)
-          {
-            this.listService.getSingleList(id).subscribe({
-              next: (response)=>{
-                this.listDetails=response
-                newEntryDetails.description='';
-                newEntryDetails.priorityLevel='';
-                newEntryDetails.name='';
-              }
-            })
+      next: () => {
+        this.route.paramMap.subscribe({
+          next: (params) => {
+            const id = params.get('id');
+            if (id) {
+              this.listService.getSingleList(id).subscribe({
+                next: (response) => {
+                  this.listDetails = response
+                  newEntryDetails.description = '';
+                  newEntryDetails.priorityLevel = '';
+                  newEntryDetails.name = '';
+                }
+              })
+            }
           }
-        }
-      })
+        })
 
-        
+
       }
     })
 
@@ -129,121 +126,133 @@ export class ViewListComponent implements OnInit {
     console.log(this.newEntryDetails);
   }
 
-  completeTask(id: string, entryDetails: Entry)
-  {
-    entryDetails.isCompleted=!entryDetails.isCompleted
-    
+  completeTask(id: string, entryDetails: Entry) {
+    entryDetails.isCompleted = !entryDetails.isCompleted
+
 
     this.listService.completeTask(id, entryDetails).subscribe({
-      next:()=>{ this.route.paramMap.subscribe({
-        next:(params) => {
-          const id = params.get('id');
-          if(id)
-          {
-            this.listService.getSingleList(id).subscribe({
-              next: (response)=>{
-                this.listDetails=response
-                
-              
-              }
-            })
-          }
-        }
-      })
+      next: () => {
+        this.route.paramMap.subscribe({
+          next: (params) => {
+            const id = params.get('id');
+            if (id) {
+              this.listService.getSingleList(id).subscribe({
+                next: (response) => {
+                  this.listDetails = response
 
-        
+
+                }
+              })
+            }
+          }
+        })
+
+
       }
     })
-    
+
   }
 
-  editEntry(id: string, entryDetails:Entry)
-  {
+  editEntry(id: string, entryDetails: Entry) {
     console.log(entryDetails)
     this.listService.editEntry(id, entryDetails).subscribe({
-      next:()=>{ this.route.paramMap.subscribe({
-        next:(params) => {
-          const id = params.get('id');
-          if(id)
-          {
-            this.listService.getSingleList(id).subscribe({
-              next: (response)=>{
-                this.listDetails=response
-                this.editedEntryDetails.name=''
-                this.editedEntryDetails.priorityLevel=''
-                this.editedEntryDetails.description=''
-              }
-            })
+      next: () => {
+        this.route.paramMap.subscribe({
+          next: (params) => {
+            const id = params.get('id');
+            if (id) {
+              this.listService.getSingleList(id).subscribe({
+                next: (response) => {
+                  this.listDetails = response
+                  this.editedEntryDetails.name = ''
+                  this.editedEntryDetails.priorityLevel = ''
+                  this.editedEntryDetails.description = ''
+                }
+              })
+            }
           }
-        }
-      })
+        })
 
-        
+
       }
     })
   }
 
- 
 
-  priorityFiltering(entries: Entry[], dummyflag: boolean)
-  {
-    this.flag=dummyflag;
-   
-    if(this.flag==true)
-    {
-      this.listDetails.entries = entries.sort((a,b)=>this.priorityMap.get(a.priorityLevel)-this.priorityMap.get(b.priorityLevel));
-    }
-    else{
-      this.listDetails.entries =entries.sort((a,b)=>this.priorityMap.get(b.priorityLevel)-this.priorityMap.get(a.priorityLevel));
-    }
-    this.flag=!this.flag
-   
-  }
 
-  
-  alphabeticFiltering(entries: Entry[], dummyflag: boolean)
-  {
-    this.flag=dummyflag;
-   
-    if(this.flag==true)
-    {
-      this.listDetails.entries = entries.sort((a,b)=>a.name.localeCompare(b.name));
-    }
-    else{
-      this.listDetails.entries = entries.sort((a,b)=>a.name.localeCompare(b.name)).reverse();
-    }
-    this.flag=!this.flag
-   
-  }
+  priorityFiltering(entries: Entry[], dummyflag: boolean) {
+    this.flag = dummyflag;
 
-  dateFiltering(entries:Entry[], dummyflag: boolean)
-  {
-    this.flag=dummyflag;
-
-    
-   
-    if(this.flag==true)
-    {
-      
-      this.listDetails.entries = entries.sort((a,b)=> new Date(a.date).getTime() - new Date(b.date).getTime());
-   
+    if (this.flag == true) {
+      this.listDetails.entries = entries.sort((a, b) => this.priorityMap.get(a.priorityLevel) - this.priorityMap.get(b.priorityLevel));
     }
-    else{
-    this.listDetails.entries = entries.sort((a,b)=> new Date(b.date).getTime() - new Date(a.date).getTime())
+    else {
+      this.listDetails.entries = entries.sort((a, b) => this.priorityMap.get(b.priorityLevel) - this.priorityMap.get(a.priorityLevel));
     }
-    this.flag=!this.flag
+    this.flag = !this.flag
 
   }
 
-  fillForm(id: string)
-  {
+
+  alphabeticFiltering(entries: Entry[], dummyflag: boolean) {
+    this.flag = dummyflag;
+
+    if (this.flag == true) {
+      this.listDetails.entries = entries.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    else {
+      this.listDetails.entries = entries.sort((a, b) => a.name.localeCompare(b.name)).reverse();
+    }
+    this.flag = !this.flag
+
+  }
+
+  dateFiltering(entries: Entry[], dummyflag: boolean) {
+    this.flag = dummyflag;
+
+
+
+    if (this.flag == true) {
+
+      this.listDetails.entries = entries.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+    }
+    else {
+      this.listDetails.entries = entries.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    }
+    this.flag = !this.flag
+
+  }
+
+  completedFiltering(entries: Entry[], dummyflag: boolean) {
+    this.flag = dummyflag;
+
+
+
+    if (this.flag == true) {
+
+      this.listDetails.entries = entries.sort((a, b) => Number(a.isCompleted) - Number(b.isCompleted) );
+
+    }
+    else {
+      this.listDetails.entries = entries.sort((a, b) => Number(a.isCompleted) - Number(b.isCompleted) ).reverse();
+
+    }
+    this.flag = !this.flag
+
+  }
+
+  fillForm(id: string) {
     this.listService.getEntry(id).subscribe({
-      next: (response)=>{
-        this.editedEntryDetails=response
+      next: (response) => {
+        this.editedEntryDetails = response
       }
     })
   }
 
-  
+  parseDate(date: Date) {
+    return new Date(date).getUTCDate();
+  }
+
 
 }

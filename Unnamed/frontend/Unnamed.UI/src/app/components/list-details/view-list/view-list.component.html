@@ -1,14 +1,18 @@
-<div class="cardsBlock" *ngIf="listDetails" style=" overflow-y: auto; max-height: 420px; ">
+<div style="background-color: #495563;">
+
+
+<div class="cardsBlock" *ngIf="listDetails" style=" overflow-y: auto; max-height: 420px; background-color: #7faaf6;">
 
   <div class="container-fluid" style="display: flex;">
     <div class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: yellow; font-size: large;">
         Filter
       </a>
       <ul class="dropdown-menu">
         <li><button class="dropdown-item" (click)="alphabeticFiltering(listDetails.entries, flag)">A-Z</button></li>
         <li><button class="dropdown-item" (click)="dateFiltering(listDetails.entries, flag)">By Date</button></li>
         <li><button class="dropdown-item" (click)="priorityFiltering(listDetails.entries,flag)">By Priority</button>
+          <li><button class="dropdown-item" (click)="completedFiltering(listDetails.entries,flag)">By Completeness</button>
         </li>
       </ul>
       <!-- End of dropdown-->
@@ -16,13 +20,17 @@
     </div>
   </div>
 
-  <div *ngFor="let entry of listDetails.entries" style="margin: 10px;">
+  <div *ngFor="let entry of listDetails.entries" style="margin: 10px; ">
+
+  
 
     <a style="text-decoration: none; color: black;">
       <mat-card style=>
 
         <mat-card-title>{{entry.name}}</mat-card-title>
+        
         <mat-card-subtitle>Date: {{entry.date}}</mat-card-subtitle>
+        <mat-card-subtitle>Date: {{parseDate(entry.date)}}</mat-card-subtitle>
 
 
         <mat-card-subtitle style="font-weight: bold; color: blue;">{{entry.description}}</mat-card-subtitle>
@@ -34,10 +42,10 @@
         </ng-template>
 
 
-        <mat-card-subtitle>{{entry.priorityLevel.toLowerCase()}} priority</mat-card-subtitle>
+        <mat-card-subtitle>{{entry.priorityLevel.at(0).toUpperCase()+entry.priorityLevel.substr(1,entry.priorityLevel.length).toLowerCase()}} Priority</mat-card-subtitle>
         <p></p>
 
-        <div style="display: flex; justify-content: flex-end; ">
+        <div style="display: flex; justify-content: flex-end; background-color: #495563; ">
 
           <button style="display: flex; height: 30px; width: 7px; margin-right: 10px;" mat-raised-button color="accent"
             (click)="completeTask(entry.id, entry)">
@@ -56,16 +64,16 @@
     </a>
   </div>
 </div>
-<p *ngIf="!listDetails"> List Not Found</p>
+<p *ngIf="!listDetails" > List Not Found</p>
 
 
 
 
 
-<div style="display: flex; flex-direction: row; flex: 1; margin-left: 100mm;">
-  <div style="display: flex; flex-direction: column;  margin-top:5px; width: 500px; ">
+<div style="display: flex; flex-direction: row; flex: 1; background-color: #495563; justify-content: center; margin-top: 10px;">
+  <div style="display: flex; flex-direction: column;  margin-top:5px; width: 500px; background-color: #495563;">
 
-    <form #Form="ngForm" (ngSubmit)="addEntry(listDetails.id, newEntryDetails)" #formDirective="ngForm">
+    <form #Form="ngForm" (ngSubmit)="addEntry(listDetails.id, newEntryDetails)" #formDirective="ngForm" style="">
       <div>
         <mat-form-field>
           <mat-label>Name </mat-label>
@@ -94,7 +102,7 @@
     </form>
   </div>
 
-  <div class="editEntry" style="display: flex; flex-direction: colum; ">
+  <div class="editEntry" style="display: flex; flex-direction: colum; background-color: #495563;">
 
     <form #Form="ngForm" (ngSubmit)="editEntry(editedEntryDetails.id, editedEntryDetails)" #formDirective="ngForm">
       <div>
@@ -126,3 +134,5 @@
     </form>
   </div>
 </div>
+
+</div> 
