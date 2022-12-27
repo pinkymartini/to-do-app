@@ -1,13 +1,11 @@
 
  .class1 {
-background-color: blue;
 display: flex;
-color: red;
 
 }
 
 .class1:hover{
-  color: aqua;
+  color: rgb(234, 47, 14);
 }
 
 .container-fluid{
@@ -15,6 +13,10 @@ color: red;
 }
 
 .navbar{
-  background-color: rgb(178, 214, 34);
+  background-color: rgb(31, 188, 212);
+}
+
+.navbar-collapse :hover{
+  color: rgb(204, 240, 0);
 }
 

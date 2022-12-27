@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -54,10 +55,12 @@ namespace Unnamed.Controllers
 
         [HttpPut]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> updateEntry([FromRoute] Guid id, Entry updatedEntry)
         {
             var entry = await _entryService.updateEntry(id, updatedEntry);
+
+            Debug.WriteLine(entry);
 
             if (entry == null)
             {
@@ -73,7 +76,7 @@ namespace Unnamed.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> deleteEntry([FromRoute] Guid id)
         {
             var entry = await _entryService.deleteEntry(id);

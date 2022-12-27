@@ -1,8 +1,9 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { LoginService } from 'src/app/services/login/login.service';
-import { ToDoListsService } from 'src/app/services/to-do-lists.service';
+import { TokenHandlerService } from 'src/app/services/tokenHandler/token-handler.service';
 import { ToDoListsComponent } from '../../lists/to-do-lists/to-do-lists.component';
 
 @Component({
@@ -14,29 +15,17 @@ export class LoginComponent {
 
   message: string = "";
 
-  bearerToken : string ="";
-
-
   user: User = {
     userName: "",
     password: ""
   };
 
-   httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer '+ this.bearerToken
-    })
-  };
-
-    
-
-  constructor(private loginService: LoginService, private toc: ToDoListsComponent) {
-
+  constructor(private loginService: LoginService, private tokenHandlerService: TokenHandlerService, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.loginService.getLoginPage().subscribe({
+    this.loginService.getLoginPage()
+    .subscribe({
       next: (message) => {
         this.message = message;
         console.log(message)
@@ -47,18 +36,17 @@ export class LoginComponent {
   login() {
     this.loginService.login(this.user).subscribe({
       next: (message) => {
-
-        this.bearerToken=message.toString();
-
-        //console.log(this.todoService.getLists(this.httpOptions))
+        //this.bearerToken=message.toString();
+        this.tokenHandlerService.bearerToken=message.toString();
+        console.log(message)
        
-
+        this.router.navigate(['todolists'])
         
 
-        console.log(message)
+        
       },
       error: (err) => {
-        console.log(err)
+        this.message= "Username / password incorrect"
       }
     });
   }

@@ -1,35 +1,121 @@
 
 
-<div class="container" *ngIf="lists && lists.length>0">
+  <div class="cardsBlock" *ngIf="lists && lists.length>0" style="display: flex; margin-top: 110px; flex-direction: column;">
 
-<!-- loop over the outer array using *ngFor -->
-<div *ngFor="let list of lists">
-    <!-- display the properties of the current item -->
-    <h5 >{{ list.name }}</h5>
-    <!-- loop over the inner array of objects using *ngFor -->
-    <div *ngFor="let innerItem of list.entries" style="margin-left: 20px;">
-      <!-- display the properties of the current inner item -->
-      <p>{{ innerItem.name }}</p>
-      <p>{{ innerItem.description }}</p>
-      
-      <div *ngIf="innerItem.isCompleted; else elseBlock">
-        Task Completed.</div>
-
-      <ng-template #elseBlock>Task Not Completed</ng-template>
-
-      <p></p>
+    <div style="display: flex; flex-direction: row; justify-content: center;">
+    <!-- loop over the outer array using *ngFor -->
+    <div class="singleCard" *ngFor="let list of lists" style="background-color: black; min-width: 100px; ">
 
 
-      <p>{{ innerItem.priorityLevel}}</p>
-      <p>{{ innerItem.date }}</p>
+      <a [routerLink]="['/list', list.id]" style="text-decoration: none; color: black;">
+        <mat-card style="margin: 50; ">
 
-      <p style="font-weight: bold;">end of entry {{innerItem.name}}</p>
-    
+          <mat-card-title>{{ list.name }}</mat-card-title>
+          <mat-card-subtitle *ngIf="list.entries.length<=1; else elseBlock">
+            {{list.entries.length}} Entry</mat-card-subtitle>
+
+          <ng-template #elseBlock><mat-card-subtitle>{{list.entries.length}} Entries</mat-card-subtitle></ng-template>
+
+        </mat-card>
+
+      </a>
+      <button style="height: 30px; width: 10px;" mat-raised-button (click)="deleteList(list.id)" color="warn">
+        <mat-icon>delete</mat-icon></button>
+      <button style="height: 30px; width: 10px;" mat-raised-button (click)="fillForm(list.id)" color="primary">
+        <mat-icon>edit</mat-icon></button>
+
     </div>
-    <p style="font-weight: bold;">end of list {{list.name}}</p>
+
   </div>
-  
+
+    <div>
+      <div style="display: flex; flex-direction: row; gap: 50px; margin-top: 20px; justify-content: center;">
+      
+      
+        <div class="addList">
+          <form #Form="ngForm" (ngSubmit)="addNewList(newList)" #formDirective="ngForm">
+            <h4>Add new list</h4>
+      
+            <div>
+              <mat-form-field>
+                <mat-label>Name </mat-label>
+                <input matInput name="name" [(ngModel)]="newList.name">
+              </mat-form-field>
+            </div>
+      
+            <button mat-raised-button color="primary" type="submit">Add New List</button>
+            <p>{{errorMessage}}</p>
+      
+          </form>
+        </div>
+      
+        <div class="updateList">
+      
+          <form #Form="ngForm" (ngSubmit)="updateList(editedList.id,editedList)" #formDirective="ngForm">
+            <h4>Edit List Name</h4>
+      
+            <div>
+              <mat-form-field>
+                <mat-label>Name </mat-label>
+                <input matInput name="name" [(ngModel)]="editedList.name">
+              </mat-form-field>
+            </div>
+      
+            <button mat-raised-button color="primary" type="submit">Edit Name</button>
+      
+          </form>
+      
+        </div>
+      
+      </div>
+      
+      </div>
+
+
+
+
+  </div>
+
+
+<!-- <div>
+<div style="display: flex; flex-direction: row; gap: 50px; margin-top: 20px; margin-left: 120mm;">
+
+
+  <div class="addList">
+    <form #Form="ngForm" (ngSubmit)="addNewList(newList)" #formDirective="ngForm">
+      <h4>Add new list</h4>
+
+      <div>
+        <mat-form-field>
+          <mat-label>Name </mat-label>
+          <input matInput name="name" [(ngModel)]="newList.name">
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button color="primary" type="submit">Add New List</button>
+
+    </form>
+  </div>
+
+  <div class="updateList">
+
+    <form #Form="ngForm" (ngSubmit)="updateList(editedList.id,editedList)" #formDirective="ngForm">
+      <h4>Edit List Name</h4>
+
+      <div>
+        <mat-form-field>
+          <mat-label>Name </mat-label>
+          <input matInput name="name" [(ngModel)]="editedList.name">
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button color="primary" type="submit">Edit Name</button>
+
+    </form>
+
+  </div>
+
 </div>
-<p *ngIf="!lists || lists.length <= 0"> You have no current lists.</p>
 
-
+</div> -->
+<p *ngIf="!lists || lists.length <= 0"> No list to display (log in).</p>

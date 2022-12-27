@@ -1,7 +1,7 @@
-<div>
+<div  >
 
-  <nav class="navbar navbar-expand-lg" >
-
+  <nav class="navbar navbar-expand-lg" style="">
+    
     <div class="container-fluid">
 
       <a class="navbar-brand" href="#">To-Do App</a>
@@ -13,18 +13,23 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           
+       
            <!-- Home-->  
-          <li class="nav-item">
+          <li class="nav-item"  >
             <a class="nav-link" aria-current="page" routerLink="todolists">Lists</a>
           </li>
           
           <!-- Link-->
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" routerLink="login">Login</a>
           </li>
 
+      
+       
+       
 
-          <!-- Dropdown-->
+<!-- Dropdown
+   
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Dropdown
@@ -35,18 +40,20 @@
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
-            <!-- End of dropdown-->
-
-          </li>
+      
+          </li> -->
 
 
         </ul>
+        <div class="nav-item">
+          <a class="nav-link" routerLink="">Logout</a>
+        </div>
 
           <!-- Search Bar-->
-        <form class="d-flex" role="search">
+        <!-- <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        </form> -->
 
       </div>
     </div>

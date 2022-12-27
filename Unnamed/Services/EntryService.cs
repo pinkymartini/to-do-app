@@ -51,6 +51,8 @@ namespace Unnamed.Services
                 entry.Description = updatedEntry.Description;
                 entry.Name = updatedEntry.Name;
                 entry.Date = updatedEntry.Date;
+                entry.IsCompleted= updatedEntry.IsCompleted;
+                entry.PriorityLevel = updatedEntry.PriorityLevel;
                 await _repo.SaveChangesAsync();
                 return entry;
             }

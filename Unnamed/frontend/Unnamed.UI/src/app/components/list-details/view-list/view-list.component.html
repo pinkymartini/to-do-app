@@ -1,0 +1,128 @@
+<div class="cardsBlock" *ngIf="listDetails" style=" overflow-y: auto; max-height: 420px; ">
+
+  <div class="container-fluid" style="display: flex;">
+    <div class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Filter
+      </a>
+      <ul class="dropdown-menu">
+        <li><button class="dropdown-item" (click)="alphabeticFiltering(listDetails.entries, flag)">A-Z</button></li>
+        <li><button class="dropdown-item" (click)="dateFiltering(listDetails.entries, flag)">By Date</button></li>
+        <li><button class="dropdown-item" (click)="priorityFiltering(listDetails.entries,flag)">By Priority</button>
+        </li>
+      </ul>
+      <!-- End of dropdown-->
+
+    </div>
+  </div>
+
+  <div *ngFor="let entry of listDetails.entries" style="margin: 10px;">
+
+    <a style="text-decoration: none; color: black;">
+      <mat-card style=>
+
+        <mat-card-title>{{entry.name}}</mat-card-title>
+        <mat-card-subtitle>Date: {{entry.date}}</mat-card-subtitle>
+
+
+        <mat-card-subtitle style="font-weight: bold; color: blue;">{{entry.description}}</mat-card-subtitle>
+        <mat-card-subtitle *ngIf="entry.isCompleted; else elseBlock" style="color: green; font-weight: bold;">
+          Task Completed.</mat-card-subtitle>
+
+        <ng-template #elseBlock> <mat-card-subtitle style="color: red; font-weight: bold;">
+            Task Not Completed.</mat-card-subtitle>
+        </ng-template>
+
+
+        <mat-card-subtitle>{{entry.priorityLevel.toLowerCase()}} priority</mat-card-subtitle>
+        <p></p>
+
+        <div style="display: flex; justify-content: flex-end; ">
+
+          <button style="display: flex; height: 30px; width: 7px; margin-right: 10px;" mat-raised-button color="accent"
+            (click)="completeTask(entry.id, entry)">
+            <mat-icon>check_circle</mat-icon></button>
+
+          <button style="display: flex; height: 30px; width: 7px; margin-right: 10px;" (click)="fillForm(entry.id)"
+            mat-raised-button color="primary">
+            <mat-icon>edit</mat-icon></button>
+
+          <button style="display: flex; height: 30px; width: 30px;" mat-raised-button (click)="deleteEntry(entry.id)"
+            color="warn">
+            <mat-icon>delete</mat-icon></button>
+        </div>
+
+      </mat-card>
+    </a>
+  </div>
+</div>
+<p *ngIf="!listDetails"> List Not Found</p>
+
+
+
+
+
+<div style="display: flex; flex-direction: row; flex: 1; margin-left: 100mm;">
+  <div style="display: flex; flex-direction: column;  margin-top:5px; width: 500px; ">
+
+    <form #Form="ngForm" (ngSubmit)="addEntry(listDetails.id, newEntryDetails)" #formDirective="ngForm">
+      <div>
+        <mat-form-field>
+          <mat-label>Name </mat-label>
+          <input matInput name="name" [(ngModel)]="newEntryDetails.name">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Priority</mat-label>
+          <mat-select name="priorityLevel " [(ngModel)]="newEntryDetails.priorityLevel">
+            <mat-option value="HIGH">High</mat-option>
+            <mat-option value="MEDIUM">Medium</mat-option>
+            <mat-option value="LOW">Low</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea matInput name="description" [(ngModel)]="newEntryDetails.description"></textarea>
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button color="primary" type="submit">Add New Entry</button>
+    </form>
+  </div>
+
+  <div class="editEntry" style="display: flex; flex-direction: colum; ">
+
+    <form #Form="ngForm" (ngSubmit)="editEntry(editedEntryDetails.id, editedEntryDetails)" #formDirective="ngForm">
+      <div>
+        <mat-form-field>
+          <mat-label>Name </mat-label>
+          <input matInput name="name" [(ngModel)]="editedEntryDetails.name" value="value">
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label>Priority</mat-label>
+          <mat-select name="priorityLevel " [(ngModel)]="editedEntryDetails.priorityLevel">
+            <mat-option value="HIGH">High</mat-option>
+            <mat-option value="MEDIUM">Medium</mat-option>
+            <mat-option value="LOW">Low</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea matInput name="description" [(ngModel)]="editedEntryDetails.description"></textarea>
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button color="primary" type="submit">Update Entry</button>
+    </form>
+  </div>
+</div>
