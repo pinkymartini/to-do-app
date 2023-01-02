@@ -250,8 +250,13 @@ export class ViewListComponent implements OnInit {
     })
   }
 
-  parseDate(date: Date) {
-    return new Date(date).getUTCDate();
+  parseDate(date: Date): string {
+    var dd= new Date(date).getUTCDate().toString();
+    var mm= new Date(date).getUTCMonth().toString();
+    var yy= new Date(date).getUTCFullYear().toString();
+    const resultDate=dd+'/'+mm+ '/' + yy
+    return resultDate
+    //return new Date(date).getUTCDate();
   }
 
 
