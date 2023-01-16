@@ -45,6 +45,7 @@ namespace Unnamed.Services
             list.Id = Guid.NewGuid();
 
              await _repo.ToDoLists.AddAsync(list);
+            //await _repo.ToDoLists.Append(list);
             await  _repo.SaveChangesAsync();
 
             return list;

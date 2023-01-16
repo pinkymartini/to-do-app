@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "ignored": "true",
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:ToDoListConnectionString"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ToDoListConnectionString"
+    },
+    "secrets1": {
+      "type": "secrets",
+      "dynamicId": null
+    }
+  }
+}

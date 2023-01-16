@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -53,12 +55,6 @@ builder.Services.AddSwaggerGen(setup =>
 builder.Services.AddTransient<IListService, ListService>();
 builder.Services.AddTransient<IEntryService, EntryService>();
 
-//builder.Services.AddControllersWithViews(options =>
-//{
-//    // Register the CustomAuthorizationFilter as a global filter
-//    options.Filters.Add(new CustomAuthFilter());
-//});
-
 
 //add dbase connection here
 builder.Services.AddDbContext<ToDoListDbContext>(options =>
@@ -94,9 +90,21 @@ builder.Services.AddAuthorization(options =>
 });
 
 
+//var configuration = new ConfigurationBuilder()
+//       .AddCommandLine(args)
+//       .Build();
 
 
 var app = builder.Build();
+
+//app.UseEndpoints(endpoints =>
+//{
+
+//    endpoints.MapControllers();
+
+//});
+
+
 
 
 
@@ -116,5 +124,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
 
 app.Run();

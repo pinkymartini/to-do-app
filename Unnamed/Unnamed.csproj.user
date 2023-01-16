@@ -6,6 +6,7 @@
     <_SelectedScaffolderID>MvcControllerWithActionsScaffolder</_SelectedScaffolderID>
     <_SelectedScaffolderCategoryPath>root/Common</_SelectedScaffolderCategoryPath>
     <ActiveDebugProfile>Unnamed</ActiveDebugProfile>
+    <NameOfLastUsedPublishProfile>C:\Users\msenocak\Documents\visual studio projects\Unnamed\Unnamed\Properties\PublishProfiles\unnamed - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>

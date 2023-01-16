@@ -14,6 +14,7 @@ namespace Unnamed.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+
     [AllowAnonymous]
     public class LoginController : Controller
     {

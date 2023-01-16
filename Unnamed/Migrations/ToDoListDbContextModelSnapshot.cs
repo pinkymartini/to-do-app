@@ -56,7 +56,7 @@ namespace Unnamed.Migrations
 
                     b.HasIndex("ListId");
 
-                    b.ToTable("Entry", (string)null);
+                    b.ToTable("Entry");
                 });
 
             modelBuilder.Entity("Unnamed.Models.List", b =>
@@ -71,7 +71,7 @@ namespace Unnamed.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ToDoLists", (string)null);
+                    b.ToTable("ToDoLists");
                 });
 
             modelBuilder.Entity("Unnamed.Models.User", b =>
@@ -96,7 +96,7 @@ namespace Unnamed.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Unnamed.Models.Entry", b =>

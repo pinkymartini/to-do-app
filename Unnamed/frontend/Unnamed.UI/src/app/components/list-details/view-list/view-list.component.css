@@ -1,9 +1,9 @@
 .cardsBlock{
-    display: flex;
+    display: inline-block;
     flex-direction: row; 
-    gap: 10px; 
     background-color: aquamarine; 
     justify-content: center;
     flex-wrap: wrap;
+    
     
     }

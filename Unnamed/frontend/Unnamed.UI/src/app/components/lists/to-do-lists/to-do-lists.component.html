@@ -2,15 +2,15 @@
 
 
   <div class="cardsBlock" *ngIf="lists && lists.length>0"
-    style="display: flex; margin-top: 110px; flex-direction: column; background-color: #495563;">
+    style=" flex-direction: column; background-color: #495563; border-style: dashed; border-color: red;">
 
-    <div style="display: flex; flex-direction: row; justify-content: center; gap: 10px;">
+    <div style="display: flex; flex-direction: row; justify-content: center; gap: 10px; border-style: dashed; border-color: bisque; margin: 10px;">
       <!-- loop over the outer array using *ngFor -->
-      <div class="singleCard" *ngFor="let list of lists" style="background-color: #495563; min-width: 100px; ">
+      <div class="singleCard" *ngFor="let list of lists" style="background-color: #495563; min-width: 100px; border-style: dashed; border-color: red;">
 
 
         <a [routerLink]="['/list', list.id]" style="text-decoration: none; color: black;">
-          <mat-card style="margin: 50; ">
+          <mat-card style="margin: 50;  ">
 
             <mat-card-title>{{ list.name }}</mat-card-title>
             <mat-card-subtitle *ngIf="list.entries.length<=1; else elseBlock">
@@ -31,10 +31,10 @@
     </div>
 
     <div>
-      <div style="display: flex; flex-direction: row; gap: 50px; margin-top: 20px; justify-content: center;">
+      <div style="display: flex; flex-direction: row; gap: 50px; margin-top: 20px; justify-content: center; border-style: dashed; border-color: blue;">
 
 
-        <div class="addList">
+        <div class="addList" style="border-style: dashed; border-color: red;">
           <form #Form="ngForm" (ngSubmit)="addNewList(newList)" #formDirective="ngForm">
             <h4 style="color: yellow;">Add New List</h4>
 
@@ -46,12 +46,12 @@
             </div>
 
             <button mat-raised-button color="primary" type="submit">Add New List</button>
-            <p style="color: yellow;">{{errorMessage}}</p>
+           
 
           </form>
         </div>
 
-        <div class="updateList">
+        <div class="updateList" style="border-style: dashed; border-color: red; ">
 
           <form #Form="ngForm" (ngSubmit)="updateList(editedList.id,editedList)" #formDirective="ngForm">
             <h4 style="color: yellow;">Edit List Name</h4>
@@ -73,10 +73,13 @@
 
     </div>
 
-
-
+    
+    <p style="justify-content: center; display: flex; color: yellow; ">{{errorMessage}}</p>
+    
 
   </div>
-
+  
 </div>
 <p *ngIf="!lists || lists.length <= 0"> No lists to display (log in).</p>
+
+<router-outlet></router-outlet> 

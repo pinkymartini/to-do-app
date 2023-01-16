@@ -17,18 +17,30 @@ export class ToDoListsService {
 
   getLists(): Observable<List[]>{
 
-   //return this.http.get<List[]>(this.baseApiUrl+ '/List');
-   //console.log()
+  
    var headers= new HttpHeaders({'Authorization': 'Bearer ' + this.tokenHandlerService.bearerToken});
+
+
+   //return this.http.get<List[]>('https://172.20.10.13:7183/List', {headers: headers});  
+   
+
+
+   //below is localhost
    return this.http.get<List[]>(this.baseApiUrl+ '/List', {headers: headers});  
+
+  // return this.http.get<List[]>('https://unnamed.azurewebsites.net'+ '/List', {headers: headers});  
   }
 
   getSingleList(id: string): Observable<List>{
 
-    //return this.http.get<List[]>(this.baseApiUrl+ '/List');
-    //console.log()
+    
     var headers= new HttpHeaders({'Authorization': 'Bearer ' + this.tokenHandlerService.bearerToken});
+    
     return this.http.get<List>(this.baseApiUrl+ '/List/'+ id, {headers: headers});  
+
+   // return this.http.get<List>('https://172.20.10.13:7183'+ '/List/'+ id, {headers: headers}); 
+
+
    }
 
   deleteEntry(id: string) : Observable <Entry>
@@ -74,7 +86,7 @@ export class ToDoListsService {
   {
     list.id=  '00000000-0000-0000-0000-000000000000'
     var headers= new HttpHeaders({'Authorization': 'Bearer ' + this.tokenHandlerService.bearerToken});
-    return this.http.post<List>(this.baseApiUrl+ '/List', list, {headers: headers}); 
+    return this.http.post<List>(this.baseApiUrl+ +'/List', list, {headers: headers}); 
 
   }
 

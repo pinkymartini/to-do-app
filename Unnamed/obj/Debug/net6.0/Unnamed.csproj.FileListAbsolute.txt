@@ -107,3 +107,4 @@ C:\Users\msenocak\Documents\visual studio projects\Unnamed\Unnamed\bin\Debug\net
 C:\Users\msenocak\Documents\visual studio projects\Unnamed\Unnamed\bin\Debug\net6.0\frontend\Unnamed.UI\tsconfig.app.json
 C:\Users\msenocak\Documents\visual studio projects\Unnamed\Unnamed\bin\Debug\net6.0\frontend\Unnamed.UI\tsconfig.json
 C:\Users\msenocak\Documents\visual studio projects\Unnamed\Unnamed\bin\Debug\net6.0\frontend\Unnamed.UI\tsconfig.spec.json
+C:\Users\msenocak\Documents\visual studio projects\Unnamed\Unnamed\bin\Debug\net6.0\frontend\Unnamed.UI\firebase.json

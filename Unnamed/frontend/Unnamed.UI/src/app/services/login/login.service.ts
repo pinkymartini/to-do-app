@@ -23,6 +23,11 @@ export class LoginService {
   getLoginPage(): Observable<string>
   {
     return this.http.get<string>(this.baseApiUrl+ '/Login');
+
+    
+    //return this.http.get<string>('https://unnamed.azurewebsites.net/Login');
+
+    
   }
 
   

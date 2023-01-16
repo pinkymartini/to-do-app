@@ -47,9 +47,11 @@ export class LoginComponent {
       },
       error: (err) => {
         this.message= "Username / password incorrect"
+        console.log("something went wrong")
       }
     });
   }
+
 
 
 

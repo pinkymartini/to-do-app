@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { CdkDragDrop,moveItemInArray } from '@angular/cdk/drag-drop';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
 import { Entry } from 'src/app/models/entry-model';
@@ -11,7 +12,7 @@ import { ToDoListsService } from 'src/app/services/to-do-lists.service';
   styleUrls: ['./view-list.component.css'],
 })
 
-export class ViewListComponent implements OnInit {
+export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
 
   listDetails: List = {
     name: "",
@@ -56,6 +57,12 @@ export class ViewListComponent implements OnInit {
 
 
   constructor(private listService: ToDoListsService, private route: ActivatedRoute) { }
+  ngOnDestroy(): void {
+    console.log("destroyed")
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
+  }
 
   ngOnInit(): void {
 
@@ -66,7 +73,6 @@ export class ViewListComponent implements OnInit {
           this.listService.getSingleList(id).subscribe({
             next: (response) => {
               this.listDetails = response
-              console.log(this.listDetails)
             }
           })
         }
@@ -112,6 +118,8 @@ export class ViewListComponent implements OnInit {
                   newEntryDetails.description = '';
                   newEntryDetails.priorityLevel = '';
                   newEntryDetails.name = '';
+                  newEntryDetails.isCompleted =false;
+                  newEntryDetails.id=''
                 }
               })
             }
@@ -121,14 +129,11 @@ export class ViewListComponent implements OnInit {
 
       }
     })
-
-
-    console.log(this.newEntryDetails);
   }
 
   completeTask(id: string, entryDetails: Entry) {
     entryDetails.isCompleted = !entryDetails.isCompleted
-
+    this.editedEntryDetails.isCompleted=entryDetails.isCompleted // fixes the bug for update not effect
 
     this.listService.completeTask(id, entryDetails).subscribe({
       next: () => {
@@ -139,8 +144,6 @@ export class ViewListComponent implements OnInit {
               this.listService.getSingleList(id).subscribe({
                 next: (response) => {
                   this.listDetails = response
-
-
                 }
               })
             }
@@ -167,6 +170,8 @@ export class ViewListComponent implements OnInit {
                   this.editedEntryDetails.name = ''
                   this.editedEntryDetails.priorityLevel = ''
                   this.editedEntryDetails.description = ''
+                  this.editedEntryDetails.id=''
+                  this.editedEntryDetails.isCompleted=false;
                 }
               })
             }
@@ -242,6 +247,7 @@ export class ViewListComponent implements OnInit {
 
   }
 
+  //fill form is used for editing 
   fillForm(id: string) {
     this.listService.getEntry(id).subscribe({
       next: (response) => {
@@ -254,9 +260,13 @@ export class ViewListComponent implements OnInit {
     var dd= new Date(date).getUTCDate().toString();
     var mm= new Date(date).getUTCMonth().toString();
     var yy= new Date(date).getUTCFullYear().toString();
-    const resultDate=dd+'/'+mm+ '/' + yy
+    const resultDate=(parseInt(dd)+1)+'/'+(parseInt(mm)+1)+ '/' + yy
     return resultDate
     //return new Date(date).getUTCDate();
+  }
+
+  drop(event: CdkDragDrop<{name: string; }[]>) {
+    moveItemInArray(this.listDetails.entries, event.previousIndex, event.currentIndex);
   }
 
 
