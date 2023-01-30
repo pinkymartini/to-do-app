@@ -17,6 +17,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule, } from '@angular/material/select';
 import {MatInputModule, } from '@angular/material/input';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +39,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatSelectModule,
     MatInputModule,
     DragDropModule,
-    
+    MatTooltipModule,
     
     
   ],

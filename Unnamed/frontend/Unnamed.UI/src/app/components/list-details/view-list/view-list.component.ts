@@ -35,10 +35,16 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
     description: '',
     date: new Date(),
     isCompleted: false,
-    priorityLevel: ''
+    priorityLevel: 'LOW'
   }
 
   flag: boolean = false;
+
+  showEditEntry:boolean=false;
+  showAddEntry: boolean = false;
+
+  icon:string= 'add'
+  icon2:string ='edit'
 
   editedEntryDetails: Entry = {
     id: '',
@@ -132,6 +138,7 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   completeTask(id: string, entryDetails: Entry) {
+  
     entryDetails.isCompleted = !entryDetails.isCompleted
     this.editedEntryDetails.isCompleted=entryDetails.isCompleted // fixes the bug for update not effect
 
@@ -172,6 +179,8 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
                   this.editedEntryDetails.description = ''
                   this.editedEntryDetails.id=''
                   this.editedEntryDetails.isCompleted=false;
+                  
+                  this.showEditEntry=false
                 }
               })
             }
@@ -195,6 +204,8 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
       this.listDetails.entries = entries.sort((a, b) => this.priorityMap.get(b.priorityLevel) - this.priorityMap.get(a.priorityLevel));
     }
     this.flag = !this.flag
+
+    
 
   }
 
@@ -249,6 +260,10 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
 
   //fill form is used for editing 
   fillForm(id: string) {
+    if(!this.showEditEntry)
+    {
+      this.showEditEntry=true;
+    }
     this.listService.getEntry(id).subscribe({
       next: (response) => {
         this.editedEntryDetails = response
@@ -267,6 +282,29 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
 
   drop(event: CdkDragDrop<{name: string; }[]>) {
     moveItemInArray(this.listDetails.entries, event.previousIndex, event.currentIndex);
+  }
+
+  showAddForm(): void {
+    this.showAddEntry=!this.showAddEntry
+    if(this.showAddEntry)
+    {
+      this.icon='cancel'
+      return
+    }
+    this.icon='add'
+    
+    
+  }
+
+  showEditForm(): void {
+    this.showEditEntry=!this.showEditEntry
+    if(this.showEditEntry)
+    {
+      this.icon2='stop'
+      return
+    }
+    this.icon2='edit'
+    
   }
 
 

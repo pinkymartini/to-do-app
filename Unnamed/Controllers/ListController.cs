@@ -21,19 +21,38 @@ namespace Unnamed.Controllers
 
         public delegate Task<IActionResult> FlagDelegate(Guid id, int flag);
 
+      
 
 
         public ListController(IListService listService , ToDoListDbContext db)
         {
             _listService = listService;
             _db = db;
-        }
 
+        }
+        
         [HttpGet]
         //[AllowAnonymous]
         public async Task<IActionResult> getLists()
         {
             var lists = await _listService.getLists();
+
+            if (lists == null)
+            {
+                return NotFound();
+            }
+            else return Ok(lists);
+
+            
+
+        }
+
+        [HttpGet]
+        [Route("/getPagedLists")]
+        //[AllowAnonymous]
+        public async Task<IActionResult> getPagedLists([FromQuery] ListParameters listParameters)
+        {
+            var lists = await _listService.getPagedLists(listParameters);
 
             if (lists == null)
             {

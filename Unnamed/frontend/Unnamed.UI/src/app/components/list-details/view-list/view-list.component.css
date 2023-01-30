@@ -1,9 +1,43 @@
-.cardsBlock{
-    display: inline-block;
-    flex-direction: row; 
-    background-color: aquamarine; 
-    justify-content: center;
+.main-page {
+    background-color: #e2c7db;
+    border-style: dashed;
+    border-color: red;
+    height: 100%;
+    
+}
+.cards-page {
+    display: flex; 
+    flex-direction: row;
     flex-wrap: wrap;
-    
-    
-    }
+    overflow-y: auto; 
+    height: 350px; 
+    background-color: #1c60d7; 
+    border-style: solid; 
+    border-color: white;
+    gap: 10px;
+    margin: 5px;
+  
+
+}
+
+
+.single-card{
+ 
+    word-wrap: break-word;
+    width: 270px; 
+    max-height: 150px;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+    white-space: nowrap !important;
+ 
+   
+    margin: 5px;
+    margin-left: 25px;
+}
+
+.card-button-group
+{
+    display: flex; 
+    background-color: #3c7dc7; 
+    flex-direction: row;
+}

@@ -13,6 +13,8 @@ namespace Unnamed.Services
         public Task<Unnamed.Models.List?> updateList([FromRoute] Guid id, List updatedList);
         public Task<Unnamed.Models.List?> addEntryToList([FromRoute] Guid id, Entry entry);
         public Task<Unnamed.Models.List?> deleteList([FromRoute] Guid id);
+
+        public Task<ICollection<List>> getPagedLists(ListParameters listParameters);
     }
 
 
@@ -30,7 +32,22 @@ namespace Unnamed.Services
 
             var lists = await _repo.ToDoLists.ToListAsync();
 
+            
+
             return lists;
+        }
+
+        public async Task<ICollection<Unnamed.Models.List?>> getPagedLists(ListParameters listParameters)
+        {
+
+           var lists = await _repo.ToDoLists
+                .OrderBy(x=>x.Id)
+                .Skip((listParameters.PageNumber-1)*listParameters.PageSize)
+                .Take(listParameters.PageSize)
+                .ToListAsync();
+
+            return lists;
+
         }
 
         public async Task<Unnamed.Models.List?> getList([FromRoute] Guid id)

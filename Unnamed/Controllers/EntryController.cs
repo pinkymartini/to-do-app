@@ -38,6 +38,17 @@ namespace Unnamed.Controllers
         }
 
         [HttpGet]
+        [Route("/getPagedEntries")]
+        //[AllowAnonymous]
+        public async Task<IActionResult> getPagedEntries([FromQuery] ListParameters listParameters)
+        {
+            var entries = await _entryService.getPagedEntries(listParameters);
+
+            return Ok(entries);
+
+        }
+
+        [HttpGet]
         [Route("{id:Guid}")]
         public async Task<IActionResult> getEntry([FromRoute] Guid id)
         {

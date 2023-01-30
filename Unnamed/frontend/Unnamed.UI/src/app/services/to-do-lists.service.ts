@@ -43,6 +43,18 @@ export class ToDoListsService {
 
    }
 
+  //  getPriorityList(id: string): Observable<List>{
+
+    
+  //   var headers= new HttpHeaders({'Authorization': 'Bearer ' + this.tokenHandlerService.bearerToken});
+    
+  //   return this.http.get<List>(this.baseApiUrl+ '/List/'+ id+'/FilterPriority', {headers: headers});  
+
+  //  // return this.http.get<List>('https://172.20.10.13:7183'+ '/List/'+ id, {headers: headers}); 
+
+
+  //  }
+
   deleteEntry(id: string) : Observable <Entry>
   {
     var headers= new HttpHeaders({'Authorization': 'Bearer ' + this.tokenHandlerService.bearerToken});
@@ -86,14 +98,14 @@ export class ToDoListsService {
   {
     list.id=  '00000000-0000-0000-0000-000000000000'
     var headers= new HttpHeaders({'Authorization': 'Bearer ' + this.tokenHandlerService.bearerToken});
-    return this.http.post<List>(this.baseApiUrl+ +'/List', list, {headers: headers}); 
+    return this.http.post<List>(this.baseApiUrl +'/List', list, {headers: headers}); 
 
   }
 
   
   deleteList(id: string) : Observable <List>
   {
- var headers= new HttpHeaders({'Authorization': 'Bearer ' + this.tokenHandlerService.bearerToken});
+    var headers= new HttpHeaders({'Authorization': 'Bearer ' + this.tokenHandlerService.bearerToken});
     return this.http.delete<List>(this.baseApiUrl+ '/List/'+ id ,{headers: headers}); 
 
   }

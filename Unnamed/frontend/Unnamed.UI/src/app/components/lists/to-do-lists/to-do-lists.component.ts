@@ -52,6 +52,7 @@ export class ToDoListsComponent implements OnInit {
   }
 
   addNewList(list: List) {
+    console.log(list)
     this.listService.addNewList(list).subscribe({
       next: () => {
         this.listService.getLists().subscribe({
