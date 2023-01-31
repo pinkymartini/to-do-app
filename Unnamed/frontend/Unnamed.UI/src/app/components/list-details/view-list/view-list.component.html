@@ -7,9 +7,9 @@
     
     </a>
     <ul class="dropdown-menu">
-      <li><button class="dropdown-item" (click)="alphabeticFiltering(listDetails.entries, flag)">A-Z</button></li>
+      <li><button class="dropdown-item" (click)="alphabeticFiltering(listDetails.entries,flag)">A-Z</button></li>
       <li><button class="dropdown-item" (click)="dateFiltering(listDetails.entries, flag)">By Date</button></li>
-      <li><button class="dropdown-item" (click)="priorityFiltering(listDetails.entries,flag)">By Priority</button>
+      <li><button class="dropdown-item" (click)="priorityFiltering(listDetails.entries, flag)">By Priority</button>
       <li><button class="dropdown-item" (click)="completedFiltering(listDetails.entries,flag)">By Completeness</button>
       </li>
     </ul>
@@ -84,7 +84,7 @@
             <mat-icon>check_circle</mat-icon>
           </button>
 
-          <button style="flex: 1 ;height: 30px; " (click)="fillForm(entry.id)" mat-raised-button color="primary" matTooltip="Edit">
+          <button style="flex: 1 ;height: 30px; " (click)="fillForm(entry.id)" (click)="htmlService.scroll('target')" mat-raised-button color="primary" matTooltip="Edit">
             <mat-icon>edit</mat-icon>
           </button>
 
@@ -102,13 +102,13 @@
   <p *ngIf="!listDetails"> List Not Found</p>
 
 
-  <div style="display: flex; flex-direction: row; gap: 10px; justify-content: center;">
+  <div style="display: flex; flex-direction: row; gap: 10px; justify-content: center; align-items: center;" >
     <!-- <p>Actions</p> -->
 
     <p>Add Entry</p>
 
     <div>
-      <button mat-fab color="primary" (click)="showAddForm()" matTooltip="Add a New Entry">
+      <button mat-fab color="primary" (click)="showAddForm()" (click)="htmlService.scroll('addTarget')" matTooltip="Add a New Entry">
         <mat-icon>{{icon}}</mat-icon>
       </button>
       <!-- <button mat-fab color="accent" (click)="showEditForm()" matTooltip="Edit an Entry">
@@ -120,7 +120,7 @@
       <div class="" style="  background-color: #495563;border-style: solid; border-color: blueviolet;"
         *ngIf="showAddEntry">
 
-        <form #Form="ngForm" (ngSubmit)="addEntry(listDetails.id, newEntryDetails)" #formDirective="ngForm">
+        <form id="addTarget" #Form="ngForm" (ngSubmit)="addEntry(listDetails.id, newEntryDetails)" #formDirective="ngForm">
 
           <div>
             <mat-form-field>
@@ -153,9 +153,12 @@
         </form>
       </div>
 
-      <div class="" style="background-color: #495563; border-style: solid; border-color: khaki;" *ngIf="showEditEntry">
+      <mat-card>
+      <div class="" style="background-color: #495563;">
 
-        <form #Form="ngForm" (ngSubmit)="editEntry(editedEntryDetails.id, editedEntryDetails)" #formDirective="ngForm">
+        
+
+        <form id="target" [hidden]="!showEditEntry" #Form="ngForm" (ngSubmit)="editEntry(editedEntryDetails.id, editedEntryDetails)" #formDirective="ngForm">
 
           <div>
             <mat-form-field>
@@ -188,7 +191,10 @@
           <button style="flex: 1;" mat-raised-button color="accent" (click)="showEditForm()" matTooltip="Cancel"><mat-icon>cancel</mat-icon></button>
         </div>
         </form>
+      
       </div>
+    </mat-card>
+      
 
 
     </div>

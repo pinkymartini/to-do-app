@@ -18,6 +18,10 @@ import {MatSelectModule, } from '@angular/material/select';
 import {MatInputModule, } from '@angular/material/input';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +44,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatInputModule,
     DragDropModule,
     MatTooltipModule,
+    MatProgressSpinnerModule
+    
     
     
   ],

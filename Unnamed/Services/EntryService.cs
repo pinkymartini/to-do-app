@@ -13,7 +13,7 @@ namespace Unnamed.Services
 
         public Task<Unnamed.Models.Entry?> updateEntry([FromRoute] Guid id, Entry updatedEntry);
 
-        public  Task<Unnamed.Models.Entry?> deleteEntry([FromRoute] Guid id);
+        public Task<Unnamed.Models.Entry?> deleteEntry([FromRoute] Guid id);
 
         public Task <ICollection<Entry>> getPagedEntries(ListParameters listParameters);
 
@@ -58,6 +58,8 @@ namespace Unnamed.Services
                .Take(listParameters.PageSize)
                .ToListAsync();
 
+
+            
             return lists;
 
         }

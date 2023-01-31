@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims; //defines roles
 using System.Text;
@@ -79,6 +80,27 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true, //optional
         ClockSkew = TimeSpan.Zero
     };
+
+
+
+    options.Events = new JwtBearerEvents()
+    {
+        OnAuthenticationFailed = c =>
+        {
+            c.Response.StatusCode = 401;
+            c.Response.ContentType = "application/json";
+            return c.Response.WriteAsync(JsonConvert.SerializeObject(new { error = "Unauthorized Access. Missing or Invalid JWT Token." }));
+        },
+        OnChallenge = c =>
+        {
+            c.Response.StatusCode = 401;
+            c.Response.ContentType = "application/json";
+
+            return c.Response.WriteAsync( "Unauthorized Access.");
+
+            //return c.Response.WriteAsync(JsonConvert.SerializeObject(new { error = "Unauthorized Access. Missing or Invalid JWT Token." }));
+        },
+    };
 });
 
 builder.Services.AddSingleton<IAuthorizationHandler, MinimumAgeHandler>();
@@ -124,6 +146,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
 
 
 

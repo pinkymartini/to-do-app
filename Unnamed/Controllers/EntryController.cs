@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
@@ -19,7 +20,11 @@ namespace Unnamed.Controllers
     {
         private readonly IEntryService _entryService;
 
-        private readonly ToDoListDbContext _db; 
+        private readonly ToDoListDbContext _db;
+
+
+        AuthorizationFilterContext context;
+
         public EntryController(IEntryService entryService, ToDoListDbContext db)
         {
             _entryService = entryService;
@@ -28,12 +33,13 @@ namespace Unnamed.Controllers
 
        
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
-        [CustomAuthFilter]
+        [Authorize(Roles = "Admin, Visitor ") ]
+        //[CustomAuthFilter]
         public async Task<IActionResult> getEntries()
         {
             var entries = await _entryService.getEntries();
 
+          
             return Ok(entries);
         }
 

@@ -43,7 +43,7 @@ namespace Unnamed.Controllers
         [HttpGet]
         public string WelcomeScreen()
         {
-            return JsonConvert.SerializeObject("Please enter username and password to do operations in the system");
+            return JsonConvert.SerializeObject("Please enter username and password to access the system");
         }
 
         private string GenerateUserToken(User user)

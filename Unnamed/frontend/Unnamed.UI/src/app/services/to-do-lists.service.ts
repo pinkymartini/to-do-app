@@ -41,7 +41,7 @@ export class ToDoListsService {
    // return this.http.get<List>('https://172.20.10.13:7183'+ '/List/'+ id, {headers: headers}); 
 
 
-   }
+  }
 
   //  getPriorityList(id: string): Observable<List>{
 

@@ -4,6 +4,8 @@ import { MatButton, MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
 import { Entry } from 'src/app/models/entry-model';
 import { List } from 'src/app/models/list-model';
+import { HtmlService } from 'src/app/services/html/html.service';
+import { LocalService } from 'src/app/services/local/local.service';
 import { ToDoListsService } from 'src/app/services/to-do-lists.service';
 
 @Component({
@@ -12,7 +14,7 @@ import { ToDoListsService } from 'src/app/services/to-do-lists.service';
   styleUrls: ['./view-list.component.css'],
 })
 
-export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
+export class ViewListComponent implements OnInit {
 
   listDetails: List = {
     name: "",
@@ -46,6 +48,11 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
   icon:string= 'add'
   icon2:string ='edit'
 
+  activeFilter: string ='alphabetic'
+
+  startupFilter: string='startup'
+  
+
   editedEntryDetails: Entry = {
     id: '',
     name: '',
@@ -62,23 +69,28 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
     ["LOW", 1],]);
 
 
-  constructor(private listService: ToDoListsService, private route: ActivatedRoute) { }
-  ngOnDestroy(): void {
-    console.log("destroyed")
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
-  }
+  constructor(private listService: ToDoListsService, private route: ActivatedRoute,
+    public htmlService: HtmlService,
+    private localStore:LocalService) {}
+
+
+
+  
 
   ngOnInit(): void {
 
+   this.activeFilter=  this.localStore.getData(this.startupFilter)
+
+   console.log(this.localStore.getData(this.startupFilter))
     this.route.paramMap.subscribe({
       next: (params) => {
         const id = params.get('id');
         if (id) {
           this.listService.getSingleList(id).subscribe({
             next: (response) => {
+              
               this.listDetails = response
+              this.applyFilter(response,this.activeFilter)              
             }
           })
         }
@@ -87,7 +99,6 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   deleteEntry(id: string) {
-
     console.log(id)
     this.listService.deleteEntry(id)
 
@@ -101,7 +112,8 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
                 this.listService.getSingleList(id).subscribe({
                   next: (response) => {
                     this.listDetails = response
-                    console.log(this.listDetails)
+                    
+                    this.applyFilter(this.listDetails, this.activeFilter)
                   }
                 })
               }
@@ -126,6 +138,10 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
                   newEntryDetails.name = '';
                   newEntryDetails.isCompleted =false;
                   newEntryDetails.id=''
+                  this.showAddForm()
+                  //console.log("active filter after added entry: " + this.activeFilter)
+                  this.applyFilter(this.listDetails, this.activeFilter)
+                  console.log("flag after add operation::" + this.activeFilter)
                 }
               })
             }
@@ -151,6 +167,7 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
               this.listService.getSingleList(id).subscribe({
                 next: (response) => {
                   this.listDetails = response
+                  this.applyFilter(this.listDetails, this.activeFilter)
                 }
               })
             }
@@ -181,6 +198,7 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
                   this.editedEntryDetails.isCompleted=false;
                   
                   this.showEditEntry=false
+                  this.applyFilter(this.listDetails, this.activeFilter)
                 }
               })
             }
@@ -192,9 +210,8 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
     })
   }
 
-
-
   priorityFiltering(entries: Entry[], dummyflag: boolean) {
+    this.activeFilter = 'priority'
     this.flag = dummyflag;
 
     if (this.flag == true) {
@@ -205,25 +222,32 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
     }
     this.flag = !this.flag
 
+    this.localStore.saveData(this.startupFilter,this.activeFilter)
+
     
 
   }
 
-
-  alphabeticFiltering(entries: Entry[], dummyflag: boolean) {
+  alphabeticFiltering(entries: Entry[] ,dummyflag:boolean) {
+    this.activeFilter = 'alphabetic'
     this.flag = dummyflag;
 
     if (this.flag == true) {
       this.listDetails.entries = entries.sort((a, b) => a.name.localeCompare(b.name));
+      
     }
     else {
       this.listDetails.entries = entries.sort((a, b) => a.name.localeCompare(b.name)).reverse();
+    
     }
     this.flag = !this.flag
+
+    this.localStore.saveData(this.startupFilter,this.activeFilter)
 
   }
 
   dateFiltering(entries: Entry[], dummyflag: boolean) {
+    this.activeFilter = 'date'
     this.flag = dummyflag;
 
 
@@ -237,10 +261,12 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
       this.listDetails.entries = entries.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     }
     this.flag = !this.flag
+    this.localStore.saveData(this.startupFilter,this.activeFilter)
 
   }
 
   completedFiltering(entries: Entry[], dummyflag: boolean) {
+    this.activeFilter = 'completed'
     this.flag = dummyflag;
 
 
@@ -255,6 +281,8 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
 
     }
     this.flag = !this.flag
+
+    this.localStore.saveData(this.startupFilter,this.activeFilter)
 
   }
 
@@ -280,18 +308,17 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
     //return new Date(date).getUTCDate();
   }
 
-  drop(event: CdkDragDrop<{name: string; }[]>) {
-    moveItemInArray(this.listDetails.entries, event.previousIndex, event.currentIndex);
-  }
-
   showAddForm(): void {
+
     this.showAddEntry=!this.showAddEntry
+    
     if(this.showAddEntry)
     {
       this.icon='cancel'
-      return
+     return
     }
     this.icon='add'
+    
     
     
   }
@@ -305,6 +332,32 @@ export class ViewListComponent implements OnInit, OnChanges, OnDestroy {
     }
     this.icon2='edit'
     
+  }
+
+  applyFilter(list:List, filterName:string )
+  {
+    
+    switch(filterName){
+      case 'priority':
+        this.priorityFiltering(list.entries, !this.flag)
+        break;
+
+      case 'alphabetic':
+        this.alphabeticFiltering(list.entries, !this.flag)
+        break;
+          
+      case 'date':
+        this.dateFiltering(list.entries, !this.flag)
+        break;
+
+      case 'completed':
+        this.completedFiltering(list.entries, !this.flag)
+        break;
+      
+
+    }
+   
+
   }
 
 

@@ -30,9 +30,11 @@ namespace Unnamed.Services
         public async Task<ICollection<Unnamed.Models.List?>> getLists()
         {
 
-            var lists = await _repo.ToDoLists.ToListAsync();
+            var lists = await _repo.ToDoLists.OrderBy(x=>x.Name)
+                
+                .ToListAsync();
 
-            
+        
 
             return lists;
         }

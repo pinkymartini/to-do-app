@@ -2,7 +2,7 @@
 {
     public class ListParameters
     {
-        public int maxPageSize = 50;
+        public int maxPageSize = 20;
 
         public int PageNumber { get; set; } = 1;
 

@@ -86,7 +86,7 @@ namespace Unnamed.Controllers
 
         [HttpPut]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
        
         public async Task<IActionResult> updateList([FromRoute] Guid id, List updatedList)
         {
@@ -121,7 +121,7 @@ namespace Unnamed.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> deleteList([FromRoute] Guid id)
         {
             var list = await _listService.deleteList(id);
